@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from './../shared/shared.module';
+
 import { PriceCalcComponent } from './price-calc/price-calc.component';
+import { Routes, RouterModule } from '@angular/router';
 
-
+const routes: Routes = [
+  { path: '', component: PriceCalcComponent }
+];
 
 @NgModule({
   declarations: [PriceCalcComponent],
   imports: [
-    CommonModule
-  ]
+    SharedModule,
+    RouterModule.forChild(routes)
+  ],
+  exports: [ RouterModule ]
 })
 export class OrderModule { }
