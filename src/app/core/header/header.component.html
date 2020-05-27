@@ -1,1 +1,23 @@
-<p>header works!</p>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div class="app-nav d-flex align-items-center justify-content-between">
+      <h5 [routerLink]="['/']">{{ "AppTitle" | translate }}</h5>
+      <ul class="list-unstyled mx-4 m-0 p-0">
+        <li [routerLink]="['/order']" [routerLinkActive]="'acive'" [routerLinkActiveOptions]="{ exact: true }">
+          <button mat-button>{{ "PriceCalculator" | translate }}</button>
+        </li>
+      </ul>
+    </div>
+    <span class="spacer"></span>
+    <button class="header-icon" mat-icon-button aria-label="button with language icon" [matMenuTriggerFor]="langMenu">
+      <mat-icon aria-hidden="false" aria-label="language icon">language</mat-icon>
+    </button>
+    <mat-menu #langMenu="matMenu">
+      <button mat-menu-item (click)="changeLanguage('en')">{{ "English" | translate }}</button>
+      <button mat-menu-item (click)="changeLanguage('ar')">{{ "Arabic" | translate }}</button>
+    </mat-menu>
+    <button class="header-icon" mat-icon-button aria-label="button with account_circle icon">
+      <mat-icon aria-hidden="false" aria-label="account_circle icon">account_circle</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

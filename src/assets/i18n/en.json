@@ -1,3 +1,9 @@
 {
-    "AppTitle": "Price Calculator"
+    "AppTitle": "Know The Price",
+    "English": "English",
+    "Arabic": "Arabic",
+    "PriceCalculator": "Price Calculator",
+    "Copyrights": "Copyrights reserved to {{authorName}}",
+    "About": "About",
+    "FAQs": "FAQs"
 }

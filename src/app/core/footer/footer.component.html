@@ -1,1 +1,16 @@
-<p>footer works!</p>
+<footer>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row class="mt-auto">
+      <div class="w-100 d-flex align-items-center justify-content-between">
+        <p>
+          {{ "Copyrights" | translate: params }}
+        </p>
+        <div class="d-flex align-items-center justify-content-between">
+          <button mat-button>{{ "About" | translate }}</button>
+          <mat-divider [vertical]="true"></mat-divider>
+          <button mat-button>{{ "FAQs" | translate }}</button>
+        </div>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</footer>

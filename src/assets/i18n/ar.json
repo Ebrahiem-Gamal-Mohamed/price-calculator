@@ -1,3 +1,9 @@
 {
-    "AppTitle": "إعرف سعرك"
+    "AppTitle": "إعرف سعرك",
+    "English": "الإنجليزية",
+    "Arabic": "العربية",
+    "PriceCalculator": "سعر الطلب",
+    "Copyrights": "جميع الحقوق محفوظة {{authorName}}",
+    "About": "عن",
+    "FAQs": "أسئلة متكررة"
 }

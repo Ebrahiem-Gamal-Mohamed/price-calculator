@@ -1,11 +1,12 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { environment } from "./../environments/environment";
 // third parties ...
-import { InMemoryWebApiModule } from "angular2-in-memory-web-api";
+import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 // modules ...
@@ -19,7 +20,7 @@ import * as AppEnums from "./shared/appEnums.enum";
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 @NgModule({
@@ -27,17 +28,23 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot({
       defaultLanguage: AppEnums.Languages.EN,
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
+        useFactory: createTranslateLoader,
         deps: [HttpClient],
-      }
+      },
     }),
-    InMemoryWebApiModule.forRoot(InMemService, { delay: 500 }),
+    environment.production
+      ? []
+      : HttpClientInMemoryWebApiModule.forRoot(InMemService, 
+        { 
+          delay: 500,
+          dataEncapsulation: false,
+          passThruUnknownUrl: true 
+        }),
     AuthModule,
     CoreModule,
   ],

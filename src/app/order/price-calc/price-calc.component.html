@@ -1,1 +1,61 @@
-<p>price-calc works!</p>
+<mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-tile>
+    <mat-card class="w-100">
+        <mat-card-content>
+            <form class="order-form" [formGroup]="orderForm">
+              <mat-form-field class="w-100">
+                <mat-label>{{ "ItemURL" | translate }}</mat-label>
+                <input matInput formControlName="url" />
+              </mat-form-field>
+      
+              <mat-form-field class="w-100">
+                <mat-label>{{ "ItemPrice" | translate }}</mat-label>
+                <input matInput formControlName="price" />
+              </mat-form-field>
+      
+              <mat-form-field class="w-100">
+                <mat-label>{{ "ItemCategory" | translate }}</mat-label>
+                <input matInput formControlName="category" />
+              </mat-form-field>
+      
+              <mat-form-field class="w-100">
+                <mat-label>{{ "ItemColor" | translate }}</mat-label>
+                <input matInput formControlName="color" />
+              </mat-form-field>
+      
+              <mat-form-field class="w-100">
+                <mat-label>{{ "ItemWeight" | translate }}</mat-label>
+                <input matInput formControlName="weight" />
+              </mat-form-field>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button color="primary" [disabled]="!orderForm.valid" (click)="addItem()">{{'Add Item' | translate}}</button>
+        </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card class="w-100">
+      <mat-card-header>
+        <mat-card-title>{{ "AddedItems" | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list *ngIf="items?.length; else NoDataFound">
+          <mat-list-item *ngFor="let item of items; let i = index">
+            <div mat-line>{{ item.name }}</div>
+            <button mat-icon-button color="accent" (click)="removeItem(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </mat-list>
+        <ng-template #NoDataFound>
+            {{'NoData' | translate}}
+        </ng-template>
+      </mat-card-content>
+      <mat-card-footer *ngIf="items?.length">
+        <mat-card-title>{{ "TotalPrice" | translate }} {{ totalPrice }}</mat-card-title>
+      </mat-card-footer>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

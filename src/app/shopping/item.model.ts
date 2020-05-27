@@ -1,7 +1,7 @@
 export interface Item {
-    id: string;
-    name: string;
-    price: number;
+    id?: string;
+    name?: string;
+    price?: number;
     category?: string;
     quantity?: number;
     color?: string;
