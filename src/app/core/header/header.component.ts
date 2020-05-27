@@ -32,6 +32,13 @@ export class HeaderComponent implements OnInit {
       this.isArabic = false;
       this.changeLanguage(AppEnums.Languages.EN);
     }
+    this.authService.$isAuth.subscribe(val => {
+      if (val) {
+        this.user = this.browserStorageService.getLocal('userAuth');
+      } else {
+        this.user = this.browserStorageService.getLocal('userAuth') ? this.browserStorageService.getLocal('userAuth') : null;
+      }
+    });
   }
 
   changeLanguage(lang: string) {

@@ -33,6 +33,7 @@ export class PriceCalcComponent implements OnInit {
   internationalShippingFees: number = 0;
   discount: number = 0;
   isArabic: boolean = false;
+  authenticated: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +44,13 @@ export class PriceCalcComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.authService.$isAuth.subscribe(val => {
+      if (val) {
+        this.authenticated = true;
+      } else {
+        this.browserStorageService.getLocal("userAuth") ? this.authenticated = true : this.authenticated = false;
+      }
+    });
     const calture = this.browserStorageService.getLocal("calture");
     calture === AppEnums.Languages.AR
       ? (this.isArabic = true)
@@ -167,12 +175,12 @@ export class PriceCalcComponent implements OnInit {
   }
 
   getItemsTotalCost(): number {
-    return this.items.reduce((p , c) => Math.round(p['price']) + Math.round(c['price']), 0);
+    return this.items.reduce((p , c) => Math.round(p) + Math.round(c['price']), 0);
   }
 
   getInternationalFees(): number {
     let fees: number;
-    const itemsWeight = this.items.reduce((p, c) => Math.round(p['weight']) + Math.round(c['weight']), 0);
+    const itemsWeight = this.items.reduce((p, c) => Math.round(p) + Math.round(c['weight']), 0);
     if (itemsWeight < 1) {
       fees = 0;
     } else if (itemsWeight >= 1 && itemsWeight <= 5) {
@@ -185,10 +193,11 @@ export class PriceCalcComponent implements OnInit {
 
   removeItem(index: number) {
     this.items.splice(index, 1);
+    this.calcPrice();
   }
 
   addItemsToCart() {
-    if (this.authService.isAuthenticated) {
+    if (this.authenticated) {
       if (this.items.length) {
         this.browserStorageService.setLocal("cart", this.items);
       }

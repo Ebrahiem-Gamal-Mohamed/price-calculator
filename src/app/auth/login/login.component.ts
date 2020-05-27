@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.browserStorageService.getLocal("userAuth")) {
-      this.authService.isAuthenticated = true;
+      this.authService.isAuth.next(true);
       this.router.navigate(["/"]);
     } else {
-      this.authService.isAuthenticated = false;
+      this.authService.isAuth.next(false);
     }
     this.loginForm = this.fb.group({
       username: ["", Validators.required],

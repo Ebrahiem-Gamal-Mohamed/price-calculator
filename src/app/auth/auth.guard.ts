@@ -14,14 +14,14 @@ import { AuthService } from './auth.service';
   providedIn: "root",
 })
 export class AuthGuard implements CanActivate {
-
+  isAuthenticated: boolean = false;
   constructor(
     private browserService: BrowserStorageService,
     private router: Router,
     private authService: AuthService
   ) {
     const userAuth = this.browserService.getLocal("userAuth");
-    this.authService.isAuthenticated = userAuth ? true : false;
+    this.isAuthenticated = userAuth ? true : false;
   }
 
   canActivate(
@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!this.authService.isAuthenticated) {
+    if (!this.isAuthenticated) {
       this.router.navigate(["/login"]);
       return false;
     }

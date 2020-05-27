@@ -42,11 +42,11 @@
       <mat-menu #accountMenu="matMenu">
         <button mat-menu-item disabled>
           <i class="fa fa-user"></i>
-          <span>{{ user?.username }}</span>
+          <span class="mx-2">{{ user?.username }}</span>
         </button>
         <button mat-menu-item (click)="logout()">
-          <i class="fa fa-logout" [class.flip-direction]="isArabic"></i>
-          <span>{{ "Logout" | translate }}</span>
+          <i class="fa fa-sign-out" [class.flip-direction]="isArabic"></i>
+          <span class="mx-2">{{ "Logout" | translate }}</span>
         </button>
       </mat-menu>
     </ng-container>
