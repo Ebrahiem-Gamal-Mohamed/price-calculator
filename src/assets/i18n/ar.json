@@ -3,7 +3,10 @@
     "English": "الإنجليزية",
     "Arabic": "العربية",
     "PriceCalculator": "سعر الطلب",
-    "Copyrights": "جميع الحقوق محفوظة {{authorName}}",
+    "Copyrights": "جميع الحقوق محفوظة &copy; {{authorName}}",
     "About": "عن",
-    "FAQs": "أسئلة متكررة"
+    "FAQs": "أسئلة متكررة",
+    "WelcomeMessage": "أهلا ومرحبا بكم في <strong color='accent'>منظمة إعرف سعرك</strong> ",
+    "FieldRequired": "هذا الحقل <strong>مطلوب</strong>",
+    "Currency": "$"
 }

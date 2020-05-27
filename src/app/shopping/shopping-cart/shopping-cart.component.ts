@@ -1,3 +1,4 @@
+import { BrowserStorageService } from './../../shared/_services/browser-storage.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shopping-cart.component.sass']
 })
 export class ShoppingCartComponent implements OnInit {
-
-  constructor() { }
+  cartItems: any[] = [];
+  constructor(private browserStorageService: BrowserStorageService) { }
 
   ngOnInit(): void {
+    this.cartItems = this.browserStorageService.getLocal('cart');
   }
 
 }

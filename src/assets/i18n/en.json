@@ -3,7 +3,10 @@
     "English": "English",
     "Arabic": "Arabic",
     "PriceCalculator": "Price Calculator",
-    "Copyrights": "Copyrights reserved to {{authorName}}",
+    "Copyrights": "Copyrights &copy; reserved to {{authorName}}",
     "About": "About",
-    "FAQs": "FAQs"
+    "FAQs": "FAQs",
+    "WelcomeMessage": "Welcome to our <strong color='accent'>Price Calculator</strong> Org.",
+    "FieldRequired": "Field is <strong>Required</strong>",
+    "Currency": "$"
 }

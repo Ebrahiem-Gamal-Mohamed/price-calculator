@@ -9,15 +9,46 @@
       </ul>
     </div>
     <span class="spacer"></span>
-    <button class="header-icon" mat-icon-button aria-label="button with language icon" [matMenuTriggerFor]="langMenu">
+    <ng-container *ngIf="user">
+      <button class="header-icon" mat-icon-button aria-label="button with shopping_cart icon"
+        [routerLink]="['/shopping']">
+        <mat-icon aria-hidden="false" aria-label="shopping_cart icon" matTooltip="{{ 'ShoppingCart' | translate }}">
+          shopping_cart</mat-icon>
+      </button>
+    </ng-container>
+    <button class="header-icon" mat-icon-button aria-label="button with language icon" [matMenuTriggerFor]="langMenu"
+      matTooltip="{{ 'Language' | translate }}">
       <mat-icon aria-hidden="false" aria-label="language icon">language</mat-icon>
     </button>
     <mat-menu #langMenu="matMenu">
-      <button mat-menu-item (click)="changeLanguage('en')">{{ "English" | translate }}</button>
-      <button mat-menu-item (click)="changeLanguage('ar')">{{ "Arabic" | translate }}</button>
+      <button mat-menu-item (click)="changeLanguage('en')">
+        {{ "English" | translate }}
+      </button>
+      <button mat-menu-item (click)="changeLanguage('ar')">
+        {{ "Arabic" | translate }}
+      </button>
     </mat-menu>
-    <button class="header-icon" mat-icon-button aria-label="button with account_circle icon">
-      <mat-icon aria-hidden="false" aria-label="account_circle icon">account_circle</mat-icon>
-    </button>
+    <ng-container *ngIf="!user">
+      <button [routerLink]="['/login']" class="header-icon" mat-icon-button aria-label="button with login icon"
+        matTooltip="{{ 'Login' | translate }}">
+        <span class="fa fa-sign-in" [class.flip-direction]="isArabic"></span>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="user">
+      <button class="header-icon" mat-icon-button aria-label="button with account_circle icon"
+        [matMenuTriggerFor]="accountMenu">
+        <mat-icon aria-hidden="false" aria-label="account_circle icon">account_circle</mat-icon>
+      </button>
+      <mat-menu #accountMenu="matMenu">
+        <button mat-menu-item disabled>
+          <i class="fa fa-user"></i>
+          <span>{{ user?.username }}</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <i class="fa fa-logout" [class.flip-direction]="isArabic"></i>
+          <span>{{ "Logout" | translate }}</span>
+        </button>
+      </mat-menu>
+    </ng-container>
   </mat-toolbar-row>
 </mat-toolbar>

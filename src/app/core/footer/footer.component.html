@@ -2,9 +2,29 @@
   <mat-toolbar color="primary">
     <mat-toolbar-row class="mt-auto">
       <div class="w-100 d-flex align-items-center justify-content-between">
-        <p>
-          {{ "Copyrights" | translate: params }}
-        </p>
+        <ul class="list-unstyled m-0 p-0 d-flex align-items-center justify-content-between">
+          <li>
+            <button mat-icon-button>
+              <span class="fa fa-facebook"></span>
+            </button>
+          </li>
+          <li>
+            <button mat-icon-button>
+              <span class="fa fa-twitter"></span>
+            </button>
+          </li>
+          <li>
+            <button mat-icon-button>
+              <span class="fa fa-instagram"></span>
+            </button>
+          </li>
+          <li>
+            <button mat-icon-button>
+              <span class="fa fa-youtube"></span>
+            </button>
+          </li>
+        </ul>
+        <p [innerHTML]="'Copyrights' | translate: params"></p>
         <div class="d-flex align-items-center justify-content-between">
           <button mat-button>{{ "About" | translate }}</button>
           <mat-divider [vertical]="true"></mat-divider>

@@ -1,1 +1,9 @@
-<p>shopping-cart works!</p>
+<div class="container">
+  <ng-container *ngIf="cartItems?.length; else noItems"> </ng-container>
+  <ng-template #noItems>
+    <div class="w-100 text-center">
+      <!-- <span><mat-icon>empty</mat-icon></span> -->
+      <p>{{ "NoItems" | translate }}</p>
+    </div>
+  </ng-template>
+</div>

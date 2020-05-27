@@ -15,6 +15,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [],
@@ -33,7 +37,11 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatDividerModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    MatBadgeModule,
+    MatTooltipModule,
+    MatSelectModule,
+    MatSnackBarModule
   ],
   exports: [
     CommonModule,
@@ -51,7 +59,11 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatDividerModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    MatBadgeModule,
+    MatTooltipModule,
+    MatSelectModule,
+    MatSnackBarModule
   ]
 })
 export class SharedModule { }

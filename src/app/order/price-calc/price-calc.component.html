@@ -1,61 +1,108 @@
-<mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile>
-    <mat-card class="w-100">
-        <mat-card-content>
-            <form class="order-form" [formGroup]="orderForm">
-              <mat-form-field class="w-100">
-                <mat-label>{{ "ItemURL" | translate }}</mat-label>
-                <input matInput formControlName="url" />
-              </mat-form-field>
-      
-              <mat-form-field class="w-100">
-                <mat-label>{{ "ItemPrice" | translate }}</mat-label>
-                <input matInput formControlName="price" />
-              </mat-form-field>
-      
-              <mat-form-field class="w-100">
-                <mat-label>{{ "ItemCategory" | translate }}</mat-label>
-                <input matInput formControlName="category" />
-              </mat-form-field>
-      
-              <mat-form-field class="w-100">
-                <mat-label>{{ "ItemColor" | translate }}</mat-label>
-                <input matInput formControlName="color" />
-              </mat-form-field>
-      
-              <mat-form-field class="w-100">
-                <mat-label>{{ "ItemWeight" | translate }}</mat-label>
-                <input matInput formControlName="weight" />
-              </mat-form-field>
-            </form>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button color="primary" [disabled]="!orderForm.valid" (click)="addItem()">{{'Add Item' | translate}}</button>
-        </mat-card-actions>
-    </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card class="w-100">
-      <mat-card-header>
-        <mat-card-title>{{ "AddedItems" | translate }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-list *ngIf="items?.length; else NoDataFound">
-          <mat-list-item *ngFor="let item of items; let i = index">
-            <div mat-line>{{ item.name }}</div>
-            <button mat-icon-button color="accent" (click)="removeItem(i)">
-                <mat-icon>delete</mat-icon>
-            </button>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-        </mat-list>
-        <ng-template #NoDataFound>
-            {{'NoData' | translate}}
-        </ng-template>
-      </mat-card-content>
-      <mat-card-footer *ngIf="items?.length">
-        <mat-card-title>{{ "TotalPrice" | translate }} {{ totalPrice }}</mat-card-title>
-      </mat-card-footer>
-    </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+<section class="d-flex align-items-center justify-content-between p-3">
+  <mat-card class="price-card">
+    <mat-card-content>
+      <form class="order-form" [formGroup]="orderForm">
+        <mat-form-field class="w-100">
+          <mat-label>{{ "ItemURL" | translate }}</mat-label>
+          <input type="url" matInput formControlName="url"
+            placeholder="https://example.com" />
+          <mat-error *ngIf="orderForm.get('url').hasError('pattern') && !orderForm.get('url').hasError('required')">
+            <span [innerHTML]="'NotValidURL' | translate"></span>
+          </mat-error>
+          <mat-error *ngIf="orderForm.get('url').hasError('required')">
+            <span [innerHTML]="'FieldRequired' | translate"></span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-label>{{ "ItemPrice" | translate }}</mat-label>
+          <input matInput formControlName="price" />
+          <mat-icon matSuffix>{{ 'Currency' | translate }}</mat-icon>
+          <mat-error *ngIf="orderForm.get('price').hasError('pattern') && !orderForm.get('price').hasError('required')">
+            <span [innerHTML]="'NumbersOnly' | translate"></span>
+          </mat-error>
+          <mat-error *ngIf="orderForm.get('price').hasError('required')">
+            <span [innerHTML]="'FieldRequired' | translate"></span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-label>{{ "ItemCategory" | translate }}</mat-label>
+          <mat-select formControlName="category">
+            <ng-container *ngFor="let cat of categories">
+              <mat-option [value]="cat?.id" [disabled]="cat.code !== 'EC'">{{ isArabic ? cat?.nameAr : cat?.nameEn }}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error *ngIf="orderForm.get('category').hasError('required')">
+            <span [innerHTML]="'FieldRequired' | translate"></span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-label>{{ "ItemColor" | translate }}</mat-label>
+          <input matInput formControlName="color" />
+          <mat-error *ngIf="orderForm.get('color').hasError('required')">
+            <span [innerHTML]="'FieldRequired' | translate"></span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <mat-label>{{ "ItemWeight" | translate }}</mat-label>
+          <input matInput formControlName="weight" />
+          <span matSuffix>{{ 'KG' | translate }}</span>
+          <mat-error *ngIf="orderForm.get('weight').hasError('pattern') && !orderForm.get('weight').hasError('required')">
+            <span [innerHTML]="'NumbersOnly' | translate"></span>
+          </mat-error>
+          <mat-error *ngIf="orderForm.get('weight').hasError('required')">
+            <span [innerHTML]="'FieldRequired' | translate"></span>
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      <button mat-raised-button color="primary" [disabled]="!orderForm.valid"
+        (click)="addItem()">{{'Add Item' | translate}}</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="price-card">
+    <mat-card-header>
+      <mat-card-title>{{ "AddedItems" | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="items-list">
+      <mat-list *ngIf="items?.length; else NoDataFound">
+        <mat-list-item *ngFor="let item of items; let i = index">
+          <div mat-line>{{ item?.name }} | {{ item?.price }} ({{ 'Currency' | translate }})</div>
+          <button mat-icon-button color="accent" (click)="removeItem(i)" matTooltip="{{ 'RemoveItem' | translate }}">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+      <ng-template #NoDataFound>
+        <div class="w-100 text-center">
+          <!-- <span><mat-icon>empty</mat-icon></span> -->
+          <p>{{'NoItems' | translate}}</p>
+        </div>
+      </ng-template>
+    </mat-card-content>
+    <mat-card-footer class="p-3" *ngIf="items?.length">
+      <p class="mb-4">{{ "TotalPrice" | translate }} {{ totalPrice }} ({{ 'Currency' | translate }})</p>
+      <p class="text-center">
+        <button mat-raised-button color="primary" (click)="addItemsToCart()">{{ 'AddToCart' | translate }}</button>
+      </p>
+      <div>
+        <p class="text-center">
+          <button mat-button *ngIf="!isHaveCoupon" (click)="toggleCouponCode()">{{ 'HaveACouponCode?' | translate }}</button>
+        </p>
+        <ng-container *ngIf="isHaveCoupon">
+          <mat-form-field>
+            <mat-label>{{ "CouponCode" | translate }}</mat-label>
+            <input matInput [formControl]="couponCode" [placeholder]="'EnterCouponCode' | translate" />
+          </mat-form-field>
+          <button class="mx-2" mat-raised-button color="primary" [disabled]="!couponCode.value" (click)="applyCode()">{{ 'Apply' | translate }}</button>
+        </ng-container>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</section>
